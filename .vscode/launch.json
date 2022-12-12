@@ -7,7 +7,7 @@
     {
       "name": "bmi_weight_tracker",
       "request": "launch",
-      "deviceId": "chrome",
+      // "deviceId": "chrome",
       "type": "dart"
     },
     {

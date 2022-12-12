@@ -1,4 +1,5 @@
-import 'package:bmi_weight_tracker/bmi_data_screen.dart';
+import 'package:bmi_weight_tracker/constant/constant.dart';
+import 'package:bmi_weight_tracker/view/bmi_data_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +15,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'BMI Weight Tracker',
       theme: ThemeData(
-          appBarTheme: AppBarTheme(backgroundColor: Color(0xff251749))),
+          scaffoldBackgroundColor: primaryColor,
+          appBarTheme: AppBarTheme(backgroundColor: primaryColor)),
       home: const BmiDataScreen(),
     );
   }
