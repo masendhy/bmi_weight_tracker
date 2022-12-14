@@ -15,6 +15,7 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
   int height = 100;
   int weight = 60;
   int age = 20;
+  String? gender;
 
   double calculateBmi() {
     double heightInMeter = height / 100;
@@ -28,22 +29,39 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'BMI Weight Tracker',
-          style: TextStyle(color: Color(0xffFA7070)),
+        title: const Center(
+          child: Text(
+            'BMI Weight Tracker',
+            style: TextStyle(color: Color(0xffFA7070)),
+          ),
         ),
       ),
       body: Column(children: [
         Expanded(
             child: Row(
-          children: const [
+          children: [
             Expanded(
-                child: BmiCard(
-              child: GenderIconText(title: 'MALE', icon: Icons.male),
+                child: GestureDetector(
+              onTap: () {
+                gender = "male";
+                setState(() {});
+              },
+              child: BmiCard(
+                borderColor: (gender == "male") ? thirdColor : primaryColor,
+                child: const GenderIconText(title: 'MALE', icon: Icons.male),
+              ),
             )),
             Expanded(
-              child: BmiCard(
-                  child: GenderIconText(title: 'FEMALE', icon: Icons.female)),
+              child: GestureDetector(
+                onTap: () {
+                  gender = "female";
+                  setState(() {});
+                },
+                child: BmiCard(
+                    borderColor:
+                        (gender == "female") ? thirdColor : primaryColor,
+                    child: const GenderIconText(title: 'FEMALE', icon: Icons.female)),
+              ),
             )
           ],
         )),
@@ -52,6 +70,9 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
                 child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(
+              height: 10,
+            ),
             Text(
               'HEIGHT',
               style: labelTextSTyle,
@@ -73,7 +94,7 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
             Slider(
               activeColor: primaryColor,
               inactiveColor: Colors.white24,
-              thumbColor: Color(0xffFA7070),
+              thumbColor: const Color(0xffFA7070),
               value: height.toDouble(),
               min: 80,
               max: 200,
@@ -114,24 +135,24 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
                           weight++;
                           setState(() {});
                         },
+                        shape: const CircleBorder(),
+                        fillColor: primaryColor,
                         // elevation: 0,
                         child: const Icon(
                           Icons.add,
                           color: Color(0xffFA7070),
                         ),
-                        shape: const CircleBorder(),
-                        fillColor: primaryColor,
                       ),
                       RawMaterialButton(
                         onPressed: () {
                           weight--;
                           setState(() {});
                         },
+                        shape: const CircleBorder(),
+                        fillColor: primaryColor,
                         // elevation: 0,
                         child:
                             const Icon(Icons.remove, color: Color(0xffFA7070)),
-                        shape: const CircleBorder(),
-                        fillColor: primaryColor,
                       ),
                     ],
                   ),
@@ -143,9 +164,6 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
                   Text(
                     'AGE',
                     style: labelTextSTyle,
@@ -161,44 +179,37 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
                     height: 10,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       RawMaterialButton(
                         onPressed: () {
                           age++;
                           setState(() {});
                         },
+                        shape: const CircleBorder(),
+                        fillColor: primaryColor,
                         // elevation: 0,
-                        // ignore: sort_child_properties_last
                         child: const Icon(
                           Icons.add,
                           color: Color(0xffFA7070),
                         ),
-                        shape: const CircleBorder(),
-                        fillColor: primaryColor,
                       ),
                       RawMaterialButton(
                         onPressed: () {
                           age--;
                           setState(() {});
                         },
-                        // elevation: 0,
-                        // ignore: sort_child_properties_last
-                        child: const Icon(
-                          Icons.remove,
-                          color: Color(0xffFA7070),
-                        ),
                         shape: const CircleBorder(),
                         fillColor: primaryColor,
+                        // elevation: 0,
+                        child:
+                            const Icon(Icons.remove, color: Color(0xffFA7070)),
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
-                  )
                 ],
               ),
-            ))
+            )),
           ],
         )),
         GestureDetector(
@@ -211,8 +222,8 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
           },
           child: Container(
             decoration: BoxDecoration(color: secondaryColor),
-            height: 60,
-            margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+            height: 50,
+            margin: const EdgeInsets.all(10),
             child: const Center(
                 child: Text('Calculate BMI',
                     style: TextStyle(
@@ -230,19 +241,20 @@ class BmiCard extends StatelessWidget {
   const BmiCard({
     Key? key,
     this.child,
+    this.borderColor = primaryColor,
   }) : super(key: key);
 
   final Widget? child;
+  final Color? borderColor;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: const EdgeInsets.all(9),
-        height: 200,
+        margin: const EdgeInsets.symmetric(vertical: 9, horizontal: 4),
         decoration: BoxDecoration(
-          color: secondaryColor,
-          borderRadius: BorderRadius.circular(7),
-        ),
+            color: secondaryColor,
+            borderRadius: BorderRadius.circular(7),
+            border: Border.all(color: borderColor!)),
         child: child);
   }
 }

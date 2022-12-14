@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'BMI Weight Tracker',
       theme: ThemeData(
           scaffoldBackgroundColor: primaryColor,
-          appBarTheme: AppBarTheme(backgroundColor: primaryColor)),
+          appBarTheme: const AppBarTheme(backgroundColor: primaryColor)),
       home: const BmiDataScreen(),
     );
   }
